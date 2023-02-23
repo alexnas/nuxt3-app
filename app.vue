@@ -32,35 +32,6 @@ function fetchTodoList() {
       todoList.value = json;
     });
 }
-
-// import { defineNuxtComponent } from '#app';
-// export default defineNuxtComponent({
-//   data: () => ({
-//     todoList: [],
-//     photoGallery: [],
-//   }),
-//   computed: {
-//     numberOfPhotos() {
-//       return this.photoGallery.length;
-//     },
-//   },
-//   methods: {
-//     fetchTodoList() {
-//       fetch('https://jsonplaceholder.typicode.com/todos/')
-//         .then((response) => response.json())
-//         .then((json) => {
-//           this.todoList = json;
-//         });
-//     },
-//     fetchPhotos() {
-//       fetch('https://jsonplaceholder.typicode.com/photos/')
-//         .then((response) => response.json())
-//         .then((json) => {
-//           this.photoGallery = json;
-//         });
-//     },
-//   },
-// });
 </script>
 
 <template>
@@ -79,7 +50,7 @@ function fetchTodoList() {
     <button @click="fetchTodoList">Fetch Todo List</button>
     <p>Whole set: {{ numberOfTodos }} todos</p>
     <p>Completed: {{ numberOfCompletedTodos }} todos</p>
-    <ul>
+    <ul :class="$style.list">
       <li v-for="todo in todoList" :key="`todo-id-${todo.id}`">
         <input type="checkbox" :checked="todo.completed" />
         {{ todo.title }}
@@ -90,3 +61,10 @@ function fetchTodoList() {
     </pre>
   </div>
 </template>
+
+<style module>
+.list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+</style>
