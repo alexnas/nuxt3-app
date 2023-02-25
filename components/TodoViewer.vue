@@ -1,13 +1,20 @@
 <script setup>
 import { ref, computed } from 'vue';
 
-let todoList = ref([]);
-const numberOfTodos = computed(() => {
-  return todoList.value.length;
+defineProps({
+  title: {
+    type: String,
+    default: 'Todo List',
+  },
 });
 
-const numberOfCompletedTodos = computed(() => {
-  return todoList.value.filter((todo) => todo.completed).length;
+let todoList = ref([]);
+const totallyItems = computed(() => {
+  return todoList.value;
+});
+
+const completedItems = computed(() => {
+  return todoList.value.filter((todo) => todo.completed);
 });
 
 function fetchTodoList() {
@@ -20,32 +27,21 @@ function fetchTodoList() {
 </script>
 
 <template>
-  <img src="/todo.jpg" alt="Todo photo by Glenn Carstens-Peters" />
-  <h1 class="title">Todo List</h1>
-  <button @click="fetchTodoList">Fetch Todo List</button>
-  <p>Whole set: {{ numberOfTodos }} todos</p>
-  <p>Completed: {{ numberOfCompletedTodos }} todos</p>
-  <ul class="list">
-    <li v-for="todo in todoList" :key="`todo-id-${todo.id}`">
-      <input type="checkbox" :checked="todo.completed" />
-      {{ todo.title }}
-    </li>
-  </ul>
+  <div class="section">
+    <slot name="hero" />
+    <h1 class="title">{{ title }}</h1>
+    <button @click="fetchTodoList">Fetch Todo List</button>
+    <slot name="metrics" :completed="completedItems" :totally="totallyItems">
+      <p>Totally: {{ totallyItems.length }} todos | Completed: {{ completedItems.length }} todos</p>
+    </slot>
+    <hr />
+    <ul class="list">
+      <li v-for="todo in todoList" :key="`todo-id-${todo.id}`">
+        <input type="checkbox" :checked="todo.completed" />
+        {{ todo.title }}
+      </li>
+    </ul>
+  </div>
 </template>
 
-<style lang="scss">
-@import './assets/styles/main.scss';
-
-:root {
-  --text-color: #{$textColor};
-}
-.heading {
-  color: var(--text-color);
-}
-
-.list {
-  color: var(--text-color);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-</style>
+<style lang="scss"></style>

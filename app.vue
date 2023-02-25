@@ -8,7 +8,11 @@ import PhotoGalery from './components/PhotoGalery.vue';
     <div class="section">
       <div class="columns">
         <div class="column">
-          <TodoViewer />
+          <TodoViewer title="Welcome Todos!">
+            <template v-slot:hero>
+              <h2>Whoa this works!</h2>
+            </template>
+          </TodoViewer>
         </div>
         <div class="column">
           <PhotoGalery />
