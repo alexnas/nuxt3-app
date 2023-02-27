@@ -1,6 +1,6 @@
 <script setup>
 import TodoViewer from './components/TodoViewer.vue';
-import PhotoGalery from './components/PhotoGalery.vue';
+import PhotoGallery from './components/PhotoGallery.vue';
 </script>
 
 <template>
@@ -11,7 +11,7 @@ import PhotoGalery from './components/PhotoGalery.vue';
           <TodoViewer />
         </div>
         <div class="column">
-          <PhotoGalery />
+          <PhotoGallery />
         </div>
       </div>
     </div>

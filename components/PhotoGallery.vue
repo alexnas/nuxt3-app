@@ -5,7 +5,7 @@ import BaseDisplay from './BaseDisplay.vue';
 const props = defineProps({
   title: {
     type: String,
-    default: 'Photo Galery',
+    default: 'Photo Gallery',
   },
   itemType: {
     type: String,
