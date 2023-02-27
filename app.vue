@@ -1,7 +1,4 @@
-<script setup>
-import TodoViewer from './components/TodoViewer.vue';
-import PhotoGallery from './components/PhotoGallery.vue';
-</script>
+<script setup></script>
 
 <template>
   <div class="container">
