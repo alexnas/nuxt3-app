@@ -1,47 +1,38 @@
 <script setup>
 import { ref, computed } from 'vue';
+import BaseDisplay from './BaseDisplay.vue';
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: 'Todo List',
   },
+  itemType: {
+    type: String,
+    default: 'todos',
+  },
+});
+const itemList = ref([]);
+
+const totally = computed(() => {
+  return itemList.value;
 });
 
-let todoList = ref([]);
-const totallyItems = computed(() => {
-  return todoList.value;
+const completed = computed(() => {
+  return itemList.value.filter((item) => item.completed);
 });
-
-const completedItems = computed(() => {
-  return todoList.value.filter((todo) => todo.completed);
-});
-
-function fetchTodoList() {
-  fetch('https://jsonplaceholder.typicode.com/todos/')
-    .then((response) => response.json())
-    .then((json) => {
-      todoList.value = json;
-    });
-}
 </script>
 
 <template>
-  <div class="section">
-    <slot name="hero" />
-    <h1 class="title">{{ title }}</h1>
-    <button @click="fetchTodoList">Fetch Todo List</button>
-    <slot name="metrics" :completed="completedItems" :totally="totallyItems">
-      <p>Totally: {{ totallyItems.length }} todos | Completed: {{ completedItems.length }} todos</p>
-    </slot>
-    <hr />
-    <ul class="list">
-      <li v-for="todo in todoList" :key="`todo-id-${todo.id}`">
-        <input type="checkbox" :checked="todo.completed" />
-        {{ todo.title }}
+  <BaseDisplay :title="title" :itemType="itemType" v-model:itemList="itemList">
+    <template v-slot:metrics>
+      <p>Totally: {{ totally.length }} || Completed: {{ completed.length }}</p>
+    </template>
+    <template v-slot:items>
+      <li v-for="item in itemList" :key="item.id">
+        <input type="checkbox" :checked="item.completed" />
+        <span>{{ item.title }}</span>
       </li>
-    </ul>
-  </div>
+    </template>
+  </BaseDisplay>
 </template>
-
-<style lang="scss"></style>

@@ -1,37 +1,35 @@
 <script setup>
 import { ref, computed } from 'vue';
+import BaseDisplay from './BaseDisplay.vue';
 
-let photoGallery = ref([]);
-
-const numberOfPhotos = computed(() => {
-  return photoGallery.value.length;
+const props = defineProps({
+  title: {
+    type: String,
+    default: 'Photo Galery',
+  },
+  itemType: {
+    type: String,
+    default: 'photos',
+  },
 });
 
-function fetchPhotos() {
-  console.log('fetch Photos');
-  fetch('https://jsonplaceholder.typicode.com/photos/')
-    .then((response) => response.json())
-    .then((json) => {
-      photoGallery.value = json;
-    });
-}
+const itemList = ref([]);
+
+const totally = computed(() => {
+  return itemList.value;
+});
 </script>
 
 <template>
-  <h1 class="title">Photo Galery</h1>
-  <button type="button" @click.prevent="fetchPhotos">Fetch photosList</button>
-  <p>Whole set: {{ numberOfPhotos }} photos</p>
-  <ul class="photo-galery-list">
-    <li v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
-      <img :src="`${photo.thumbnailUrl}`" :alt="photo.title" />
-      {{ `${photo.title.slice(0, 10)}...` }}
-    </li>
-  </ul>
+  <BaseDisplay :title="title" :itemType="itemType" v-model:itemList="itemList">
+    <template v-slot:metrics>
+      <p>Totally: {{ totally.length }}</p>
+    </template>
+    <template v-slot:items>
+      <li v-for="item in itemList" :key="item.id">
+        <img :src="item.thumbnailUrl" :alt="item.title" />
+        {{ item.title.slice(1, 10) }}...
+      </li>
+    </template>
+  </BaseDisplay>
 </template>
-
-<style lang="scss">
-.photo-galery-list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-}
-</style>

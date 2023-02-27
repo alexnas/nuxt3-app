@@ -8,11 +8,7 @@ import PhotoGalery from './components/PhotoGalery.vue';
     <div class="section">
       <div class="columns">
         <div class="column">
-          <TodoViewer title="Welcome Todos!">
-            <template v-slot:hero>
-              <h2>Whoa this works!</h2>
-            </template>
-          </TodoViewer>
+          <TodoViewer />
         </div>
         <div class="column">
           <PhotoGalery />
@@ -23,5 +19,5 @@ import PhotoGalery from './components/PhotoGalery.vue';
 </template>
 
 <style lang="scss">
-@import './node_modules/bulma/bulma.sass';
+@import './node_modules/bulma/css/bulma.min.css'; // @import './node_modules/bulma/bulma.sass';
 </style>
