@@ -25,19 +25,21 @@ const remainingItems = computed(() => {
 </script>
 
 <template>
-  <div class="section">
-    <NuxtPage v-if="route.params.id" />
+  <NuxtLayout name="todo">
+    <div class="section">
+      <NuxtPage v-if="route.params.id" />
 
-    <BaseDisplay v-else :title="title" v-model:itemList="itemList">
-      <template v-slot:metrics>
-        <p>{{ totally.length }} totally || {{ completedItems.length }} completed || {{ remainingItems.length }} remaining</p>
-      </template>
-      <template v-slot:items>
-        <li v-for="item in itemList" :key="item.id">
-          <input type="checkbox" :checked="item.completed" />
-          <NuxtLink :to="`/display/todos/${item.id}`">{{ item.title }}</NuxtLink>
-        </li>
-      </template>
-    </BaseDisplay>
-  </div>
+      <BaseDisplay v-else :title="title" v-model:itemList="itemList">
+        <template v-slot:metrics>
+          <p>{{ totally.length }} totally || {{ completedItems.length }} completed || {{ remainingItems.length }} remaining</p>
+        </template>
+        <template v-slot:items>
+          <li v-for="item in itemList" :key="item.id">
+            <input type="checkbox" :checked="item.completed" />
+            <NuxtLink :to="`/display/todos/${item.id}`">{{ item.title }}</NuxtLink>
+          </li>
+        </template>
+      </BaseDisplay>
+    </div>
+  </NuxtLayout>
 </template>
