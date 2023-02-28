@@ -4,32 +4,28 @@ const props = defineProps({
     type: String,
     default: 'List of Data',
   },
-  itemType: {
-    type: String,
-    required: true,
-  },
   itemList: {
     type: Array,
     default: [],
   },
 });
 
+const route = useRoute();
+const itemType = route.path.split('/').pop();
 const emit = defineEmits(['update:itemList']);
 
-function fetchData() {
-  fetch(`https://jsonplaceholder.typicode.com/${props.itemType}/`)
+onMounted(() => {
+  fetch(`https://jsonplaceholder.typicode.com/${itemType}?_start=0&_limit=10`)
     .then((response) => response.json())
     .then((json) => emit('update:itemList', json));
-}
+});
 </script>
 
 <template>
   <section>
     <h1 class="title" style="color: blue">{{ title }}</h1>
-    <button type="button" @click="fetchData">Fetch Data</button>
     <slot name="metrics" />
     <hr />
-    <!-- <pre>{{ itemList }}</pre> -->
     <ul class="list">
       <slot name="items" />
     </ul>
