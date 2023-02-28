@@ -1,8 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
-
-const route = useRoute();
 
 const props = defineProps({
   title: {
@@ -11,22 +8,25 @@ const props = defineProps({
   },
 });
 
-const itemType = route.path.split('/').pop();
 const itemList = ref([]);
 
 const totally = computed(() => {
   return itemList.value;
 });
 
-const completed = computed(() => {
+const completedItems = computed(() => {
   return itemList.value.filter((item) => item.completed);
+});
+
+const remainingItems = computed(() => {
+  return itemList.value.filter((item) => !item.completed);
 });
 </script>
 
 <template>
-  <BaseDisplay :title="title" :itemType="itemType" v-model:itemList="itemList">
+  <BaseDisplay :title="title" v-model:itemList="itemList">
     <template v-slot:metrics>
-      <p>Totally: {{ totally.length }} || Completed: {{ completed.length }}</p>
+      <p>{{ totally.length }} totally || {{ completedItems.length }} completed || {{ remainingItems.length }} remaining</p>
     </template>
     <template v-slot:items>
       <li v-for="item in itemList" :key="item.id">

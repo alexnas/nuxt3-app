@@ -1,8 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
-
-const route = useRoute();
 
 const props = defineProps({
   title: {
@@ -11,7 +8,6 @@ const props = defineProps({
   },
 });
 
-const itemType = route.path.split('/').pop();
 const itemList = ref([]);
 
 const totally = computed(() => {
@@ -20,7 +16,7 @@ const totally = computed(() => {
 </script>
 
 <template>
-  <BaseDisplay :title="title" :itemType="itemType" v-model:itemList="itemList">
+  <BaseDisplay :title="title" v-model:itemList="itemList">
     <template v-slot:metrics>
       <p>Totally: {{ totally.length }}</p>
     </template>
