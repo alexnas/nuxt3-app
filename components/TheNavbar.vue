@@ -13,11 +13,11 @@
         <NuxtLink to="/" class="navbar-item"> Home </NuxtLink>
 
         <div class="navbar-item has-dropdown is-hoverable">
-          <NuxtLink to="#" class="navbar-link"> Display </NuxtLink>
+          <NuxtLink to="/display" class="navbar-link"> Display </NuxtLink>
 
           <div class="navbar-dropdown">
-            <NuxtLink to="/display" class="navbar-item"> Todos </NuxtLink>
-            <NuxtLink to="/display" class="navbar-item"> Photo Gallery </NuxtLink>
+            <NuxtLink to="/display/todos" class="navbar-item"> Todos </NuxtLink>
+            <NuxtLink to="/display/photos" class="navbar-item"> Photo Gallery </NuxtLink>
           </div>
         </div>
       </div>

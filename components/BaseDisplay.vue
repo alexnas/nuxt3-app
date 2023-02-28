@@ -17,7 +17,7 @@ const props = defineProps({
 const emit = defineEmits(['update:itemList']);
 
 function fetchData() {
-  fetch(`https://jsonplaceholder.typicode.com/${props.itemType}/`)
+  fetch(`https://jsonplaceholder.typicode.com/${props.itemType}?_start=0&_limit=10`)
     .then((response) => response.json())
     .then((json) => emit('update:itemList', json));
 }
