@@ -14,10 +14,19 @@ const route = useRoute();
 const itemType = route.path.split('/').pop();
 const emit = defineEmits(['update:itemList']);
 
-onMounted(() => {
-  fetch(`https://jsonplaceholder.typicode.com/${itemType}?_start=0&_limit=10`)
-    .then((response) => response.json())
-    .then((json) => emit('update:itemList', json));
+onMounted(async () => {
+  const { data, pending, error, refresh } = await useFetch(
+    `https://jsonplaceholder.typicode.com/${itemType}?_start=0&_limit=10`,
+    {
+      onResponse({ request, response, options }) {
+        emit('update:itemList', response._data);
+        return response._data;
+      },
+      onResponseError({ request, response, options }) {
+        console.log(error);
+      },
+    }
+  );
 });
 </script>
 
